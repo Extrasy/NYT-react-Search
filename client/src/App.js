@@ -1,28 +1,27 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Articles from "./pages/Articles";
+import Detail from "./pages/Detail";
+import NoMatch from "./pages/NoMatch";
+import Nav from "./components/Nav";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import { provider, Provider } from 'react-redux';
+import { store } from './redux/store';
+
+const App = () => (
+  <Provider store = { store }>
+  <Router>
+    <div>
+      <Nav />
+      <Switch>
+        <Route exact path="/" component={Articles} />
+        <Route exact path="/articles" component={Articles} />
+        <Route exact path="/articles/:id" component={Detail} />
+        <Route component={NoMatch} />
+      </Switch>
+    </div>
+    </Router>
+  </Provider>
+);
 
 export default App;

@@ -94,6 +94,48 @@ render() {
                 onClick={this.handleFormSubmit}
             >
                 Submit Article
-    )
+                </FormBtn>
+            </form>
+        </Col>
+        <Col size ="md-6 sm12">
+            <Jumbotron>
+                <h1> Articles on the List</h1>
+            </Jumbotron>
+            {this.props.articles.lenght ? (
+                <List>
+                    {this.props.articles.map(article => (
+                        <ListItem key={article._id}>
+                        <button className="like" onClick={() => this.props.increment(book._id)}>
+                        <i className="fas fa-thumbs-up"></i>
+                        <span className="like-count">{article.likes || 0}</span>
+                        </button>
+                        <Link to={"/articles/" + article._id}>
+                            <strong>
+                                {article.title} on {article.date}
+                            </strong>
+                        </Link>
+                        <DeleteBtn onClick={() => this.deleteArticle(article._id)} />
+                        </ListItem>
+                    ))}
+                </List>
+            ) : (
+                <h3>No results to Display</h3>
+                 )}
+            </Col>
+        </Row>
+        </Container>
+    );
+    }
 }
+
+const mapStateToProps = state => {
+    return {
+        articles: state.articles
+    }
 }
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(actionCreators, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Articles);
